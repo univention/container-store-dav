@@ -35,6 +35,26 @@ first candidate of choice.
 
 
 
+## Example usage
+
+
+### Command line using cURL
+
+```
+# Prepare a test file
+echo "example content" > /tmp/example-file
+
+# Put the file into a bucket
+curl -T /tmp/example-file http://localhost:8080/example-bucket/example-file
+
+# Retrieve the file
+curl http://localhost:8080/example-bucket/example-file
+
+# Remove the file
+curl -X DELETE http://localhost:8080/example-bucket/example-file
+```
+
+
 ## Architectural concerns
 
 We assume that this component is only be part of interim architectures and that
