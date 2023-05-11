@@ -6,3 +6,11 @@ services:
       context: .
     ports:
       - "8080:80"
+    volumes:
+      - type: volume
+        source: store-dav-data
+        target: /data
+
+
+volumes:
+  store-dav-data:
