@@ -1,0 +1,24 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    location / {
+        root /data/www;
+        client_body_temp_path /data/client_temp;
+        dav_methods PUT DELETE MKCOL COPY MOVE;
+        create_full_put_path  on;
+        dav_access user:rw group:r all:r;
+
+        # TODO: Add access restriction, e.g. basic auth
+
+        # TODO: remove debugging config
+        autoindex on;
+    }
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}
