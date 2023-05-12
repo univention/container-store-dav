@@ -1,1 +1,2 @@
 /helm/*/charts/*.tgz
+/helm/values-*.yaml
