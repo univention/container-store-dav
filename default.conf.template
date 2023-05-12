@@ -9,12 +9,13 @@ server {
     dav_access user:rw group:r all:r;
     min_delete_depth 2;
 
+    # TODO: remove debugging config
     autoindex on;
 
-    # TODO: Add access restriction, e.g. basic auth and deny all
+    auth_basic "Store";
+    auth_basic_user_file conf/htpasswd;
 
     location / {
-        # TODO: remove debugging config
         limit_except GET {
             deny all;
         }
@@ -26,6 +27,12 @@ server {
     }
 
     location /portal-assets/ {
+        # Allow GET without authentication for public dynamic assets
+        auth_basic off;
+
+        limit_except GET {
+            auth_basic "Store";
+        }
     }
 
     # redirect server error pages to the static page /50x.html
