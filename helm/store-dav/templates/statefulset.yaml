@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "common.names.fullname" . }}
   labels:
@@ -44,6 +44,8 @@ spec:
           volumeMounts:
             - name: htpasswd
               mountPath: /etc/nginx/conf
+            - name: data
+              mountPath: /data
           # TODO: enable those again
           # livenessProbe:
           #   httpGet:
@@ -74,3 +76,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
