@@ -245,6 +245,15 @@ true
 			<td></td>
 		</tr>
 		<tr>
+			<td>store_dav.auth_htpasswd</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td>Set to the base64 encoded htpasswd file</td>
+		</tr>
+		<tr>
 			<td>store_dav.environment</td>
 			<td>string</td>
 			<td><pre lang="json">
