@@ -35,12 +35,35 @@ first candidate of choice.
 
 
 
+## Usage
+
+### `docker-compose` based local dev environment
+
+Use the same project name to ensure that the `portal-server` can reach the
+`store-dav`.
+
+Either by specifying the project name on the command line:
+
+```
+docker compose -p portal-dev up
+```
+
+Or by setting the toplevel attribute `name` in your
+`docker-compose.override.yaml`:
+
+```yaml
+version: "3.9"
+name: portal-dev
+services:
+# [...]
+```
+
 ## Example usage
 
 
 ### Command line using cURL
 
-```
+```sh
 # Prepare a test file
 echo "example content" > /tmp/example-file
 
@@ -52,6 +75,43 @@ curl http://localhost:8080/example-bucket/example-file
 
 # Remove the file
 curl -X DELETE http://localhost:8080/example-bucket/example-file
+```
+
+
+### Test usage with the portal server
+
+```sh
+# Fetch data from UCS machine
+curl --user portal-server:univention http://localhost/univention/internal/portal > /tmp/portal
+curl --user portal-server:univention http://localhost/univention/internal/groups > /tmp/groups
+
+# Put the data into a bucket "portal-data"
+curl -T /tmp/portal http://localhost:8081/portal-data/portal
+curl -T /tmp/groups http://localhost:8081/portal-data/groups
+
+# Verify that the data is there
+curl http://localhost:8081/portal-data/
+curl http://localhost:8081/portal-data/portal
+curl http://localhost:8081/portal-data/groups
+```
+
+Adjust configuration of the `portal-server`, e.g. in your file
+`docker-compose.override.yaml`:
+
+```yaml
+services:
+  portal-server:
+    environment:
+      # PORTAL_SERVER_UCS_INTERNAL_URL: "http://host.docker.internal:8000/univention/internal"
+      PORTAL_SERVER_UCS_INTERNAL_URL: "http://store-dav/portal"
+```
+
+After bringing everything up and using the same docker compose project name,
+test that the `portal-server` can reach `store-dav`:
+
+```sh
+docker compose exec -it portal-server /bin/bash
+curl store-dav
 ```
 
 
