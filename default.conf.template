@@ -2,18 +2,30 @@ server {
     listen 80;
     listen [::]:80;
 
+    root /data/www;
+    client_body_temp_path /data/client_temp;
+    dav_methods PUT DELETE MKCOL COPY MOVE;
+    create_full_put_path  on;
+    dav_access user:rw group:r all:r;
+    min_delete_depth 2;
+
+    autoindex on;
+
+    # TODO: Add access restriction, e.g. basic auth and deny all
+
     location / {
-        root /data/www;
-        client_body_temp_path /data/client_temp;
-        dav_methods PUT DELETE MKCOL COPY MOVE;
-        create_full_put_path  on;
-        dav_access user:rw group:r all:r;
-        min_delete_depth 2;
-
-        # TODO: Add access restriction, e.g. basic auth and deny all
-
         # TODO: remove debugging config
-        autoindex on;
+        limit_except GET {
+            deny all;
+        }
+    }
+
+    # Buckets
+
+    location /portal-data/ {
+    }
+
+    location /portal-assets/ {
     }
 
     # redirect server error pages to the static page /50x.html
