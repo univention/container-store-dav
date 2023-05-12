@@ -18,14 +18,13 @@ include:
       - jobs/package-and-publish-helm-charts.yaml
 
 
-# TODO: uncomment or remove
-# lint-pre-commit:
-#   before_script:
-#     # Helm chart liniting needs the dependency charts present
-#     - |
-#       for helm_path in `find ./helm -mindepth 1 -maxdepth 1 -type d`; do
-#         helm dependency update $helm_path
-#       done
+lint-pre-commit:
+  before_script:
+    # Helm chart liniting needs the dependency charts present
+    - |
+      for helm_path in `find ./helm -mindepth 1 -maxdepth 1 -type d`; do
+        helm dependency update $helm_path
+      done
 
 
 build-store-dav:
