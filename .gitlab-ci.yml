@@ -1,0 +1,43 @@
+
+
+stages:
+  - lint
+  - build
+  - package
+  - publish
+
+
+include:
+  - project: univention/dist/docker-services
+    file: kaniko.yml
+  - project: univention/customers/dataport/upx/common-ci
+    file:
+      - defaults/souvap-workflow.yaml
+      - templates/souvap.yaml
+      - jobs/lint-pre-commit.yaml
+      - jobs/package-and-publish-helm-charts.yaml
+
+
+# TODO: uncomment or remove
+# lint-pre-commit:
+#   before_script:
+#     # Helm chart liniting needs the dependency charts present
+#     - |
+#       for helm_path in `find ./helm -mindepth 1 -maxdepth 1 -type d`; do
+#         helm dependency update $helm_path
+#       done
+
+
+build-store-dav:
+  stage: build
+  extends: .kaniko
+  needs: []
+  variables:
+    KANIKO_BUILD_CONTEXT: "."
+    CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/store-dav"
+
+# TODO: Make common-ci so smart to only publish if the variable is set
+publish-helm-charts:
+  rules:
+    - if: $SOUVAP_HELM_PROJECT_ID
+      when: never
