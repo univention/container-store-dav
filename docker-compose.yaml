@@ -1,16 +1,21 @@
 version: "3.9"
 
+name: "dev-local"
+
 services:
   store-dav:
     build:
       context: .
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - type: volume
         source: store-dav-data
         target: /data
-
+    networks:
+      default:
+        aliases:
+          - store-dav
 
 volumes:
   store-dav-data:
