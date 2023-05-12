@@ -6,6 +6,8 @@ replicaCount: 1
 
 store_dav:
   environment: "staging"
+  # -- Set to the base64 encoded htpasswd file
+  auth_htpasswd: ""
 
 image:
   registry: "registry.souvap-univention.de"
