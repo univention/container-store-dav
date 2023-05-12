@@ -8,8 +8,9 @@ server {
         dav_methods PUT DELETE MKCOL COPY MOVE;
         create_full_put_path  on;
         dav_access user:rw group:r all:r;
+        min_delete_depth 2;
 
-        # TODO: Add access restriction, e.g. basic auth
+        # TODO: Add access restriction, e.g. basic auth and deny all
 
         # TODO: remove debugging config
         autoindex on;
