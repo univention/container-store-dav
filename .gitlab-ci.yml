@@ -35,8 +35,15 @@ build-store-dav:
     KANIKO_BUILD_CONTEXT: "."
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/store-dav"
 
-# TODO: Make common-ci so smart to only publish if the variable is set
+# TODO: Update common-ci based on this. Need two possible publish jobs, one
+# that's locally publishing and one for souvap.
 publish-helm-charts:
-  rules:
-    - if: $SOUVAP_HELM_PROJECT_ID
-      when: never
+  script:
+    - |
+      for _filename in `find packages -type f`; do
+        curl \
+        --request "POST" \
+        --user gitlab-ci-token:$CI_JOB_TOKEN \
+        --form "chart=@$_filename" \
+        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/stable/charts";
+      done
