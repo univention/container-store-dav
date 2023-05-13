@@ -137,6 +137,83 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target"</td>
+			<td>string</td>
+			<td><pre lang="json">
+"/portal-assets/$1"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ingress.annotations."nginx.ingress.kubernetes.io/use-regex"</td>
+			<td>string</td>
+			<td><pre lang="json">
+"true"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ingress.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+false
+</pre>
+</td>
+			<td>Set this to `true` in order to enable the installation on Ingress related objects.</td>
+		</tr>
+		<tr>
+			<td>ingress.host</td>
+			<td>string</td>
+			<td><pre lang="json">
+null
+</pre>
+</td>
+			<td>The hostname. This parameter has to be supplied. Example `portal.example`.</td>
+		</tr>
+		<tr>
+			<td>ingress.ingressClassName</td>
+			<td>string</td>
+			<td><pre lang="json">
+"nginx"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ingress.paths</td>
+			<td>list</td>
+			<td><pre lang="json">
+[
+  {
+    "path": "/univention/portal/(icons/entries/.*)",
+    "pathType": "Prefix"
+  }
+]
+</pre>
+</td>
+			<td>The path configuration. The default only grabs what is known to be part of the frontend.</td>
+		</tr>
+		<tr>
+			<td>ingress.tls.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ingress.tls.secretName</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>nameOverride</td>
 			<td>string</td>
 			<td><pre lang="json">
@@ -200,10 +277,55 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>service.port</td>
+			<td>service.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>service.ports.http.containerPort</td>
 			<td>int</td>
 			<td><pre lang="json">
 80
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>service.ports.http.port</td>
+			<td>int</td>
+			<td><pre lang="json">
+80
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>service.ports.http.protocol</td>
+			<td>string</td>
+			<td><pre lang="json">
+"TCP"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>service.sessionAffinity.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+false
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>service.sessionAffinity.timeoutSeconds</td>
+			<td>int</td>
+			<td><pre lang="json">
+10800
 </pre>
 </td>
 			<td></td>
