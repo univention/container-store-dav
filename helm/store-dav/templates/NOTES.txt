@@ -1,1 +1,1 @@
-Thank you for installing the Self Service API OPA Integration PoC.
+Thank you for installing the HTTP based store!
