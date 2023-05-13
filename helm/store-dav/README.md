@@ -214,6 +214,129 @@ true
 			<td></td>
 		</tr>
 		<tr>
+			<td>istio.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td>Set this to `true` in order to enable the installation on Istio related objects.</td>
+		</tr>
+		<tr>
+			<td>istio.gateway.annotations</td>
+			<td>string</td>
+			<td><pre lang="json">
+null
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>istio.gateway.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+false
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>istio.gateway.externalGatewayName</td>
+			<td>string</td>
+			<td><pre lang="json">
+"swp-istio-gateway"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>istio.gateway.selectorIstio</td>
+			<td>string</td>
+			<td><pre lang="json">
+"ingressgateway"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>istio.gateway.tls.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>istio.gateway.tls.httpsRedirect</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>istio.gateway.tls.secretName</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>istio.host</td>
+			<td>string</td>
+			<td><pre lang="json">
+null
+</pre>
+</td>
+			<td>The hostname. This parameter has to be supplied. Example `portal.example`.</td>
+		</tr>
+		<tr>
+			<td>istio.virtualService.annotations</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>istio.virtualService.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>istio.virtualService.pathOverrides</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td>Allows to inject deployment specific path configuration which is configured before the elements from `paths` below. This allows to redirect some paths to other services, e.g. in order to supply a file `custom.css`.</td>
+		</tr>
+		<tr>
+			<td>istio.virtualService.paths</td>
+			<td>list</td>
+			<td><pre lang="json">
+[
+  {
+    "match": "prefix",
+    "path": "/univention/portal/icons/entries/",
+    "rewrite": "/portal-assets/icons/entries/"
+  }
+]
+</pre>
+</td>
+			<td>The paths configuration. The default only grabs what is known to be part of the frontend.  `pathOverrides` is provided as a workaround so that specific sub-paths can be redirected to other services.</td>
+		</tr>
+		<tr>
 			<td>nameOverride</td>
 			<td>string</td>
 			<td><pre lang="json">
