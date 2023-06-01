@@ -35,15 +35,8 @@ build-store-dav:
     KANIKO_BUILD_CONTEXT: "."
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/store-dav"
 
-# TODO: Update common-ci based on this. Need two possible publish jobs, one
-# that's locally publishing and one for souvap.
+
+# Not yet publishing to SouvAP
 publish-helm-charts:
-  script:
-    - |
-      for _filename in `find packages -type f`; do
-        curl \
-        --request "POST" \
-        --user gitlab-ci-token:$CI_JOB_TOKEN \
-        --form "chart=@$_filename" \
-        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/stable/charts";
-      done
+  rules:
+    - when: never
