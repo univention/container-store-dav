@@ -20,11 +20,7 @@ include:
 
 lint-pre-commit:
   before_script:
-    # Helm chart liniting needs the dependency charts present
-    - |
-      for helm_path in `find ./helm -mindepth 1 -maxdepth 1 -type d`; do
-        helm dependency update $helm_path
-      done
+    - helm repo add bitnami https://charts.bitnami.com/bitnami
 
 
 build-store-dav:
