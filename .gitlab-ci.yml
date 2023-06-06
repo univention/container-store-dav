@@ -1,5 +1,3 @@
-
-
 include:
   - project: univention/customers/dataport/upx/common-ci
     file:
@@ -9,6 +7,16 @@ include:
       - templates/kaniko.yaml
       - jobs/lint-pre-commit.yaml
       - jobs/package-and-publish-helm-charts.yaml
+
+
+variables:
+  SOUVAP_API_V4_URL: https://gitlab.souvap-univention.de/api/v4
+  SOUVAP_DOCKER_ACCESS_USER: gitlab-ci-knut
+  SOUVAP_HELM_ACCESS_USER: gitlab-ci-knut
+  SOUVAP_HELM_PROJECT_ID: 121
+  SOUVAP_REGISTRY_HOST: registry.souvap-univention.de
+  SOUVAP_REGISTRY_PATH: souvap/tooling/images/univention-store-dav
+  SOUVAP_REGISTRY_REPO: ${SOUVAP_REGISTRY_HOST}/${SOUVAP_REGISTRY_PATH}
 
 
 lint-pre-commit:
@@ -25,7 +33,19 @@ build-store-dav:
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/store-dav"
 
 
-# Not yet publishing to SouvAP
+# TODO: Remove once common-ci does not define this job anymore
 publish-helm-charts:
   rules:
     - when: never
+
+
+publish-image-souvap-store-dav:
+  needs:
+    - job: build-store-dav
+  extends: .push-image-souvap
+  variables:
+    SOUVAP_IMAGE_NAME: "store-dav"
+
+
+publish-helm-charts-souvap:
+  extends: .publish-helm-charts-souvap
