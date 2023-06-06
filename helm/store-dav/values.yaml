@@ -10,7 +10,7 @@ store_dav:
   auth_htpasswd: ""
 
 image:
-  registry: "rgitregistry.knut.univention.de"
+  registry: "gitregistry.knut.univention.de"
   repository: "univention/customers/dataport/upx/container-store-dav/store-dav"
   pullPolicy: "Always"
   tag: "latest"

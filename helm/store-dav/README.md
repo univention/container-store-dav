@@ -5,7 +5,6 @@ Proof-of-Concept for a HTTP based asset store
 - **Version**: 0.1.0
 - **Type**: application
 - **AppVersion**: 0.0.1
--
 
 ## Introduction
 
@@ -15,11 +14,30 @@ store-dav is an experimental implementation of a HTTP based asset store.
 
 ## Installing
 
-TODO: complete once the repos on gitlab.souvap-univention.de are ready!
+```
+# Installing from the locally available source code
+helm install --values ./helm/values-store-dav.yaml store-dav ./helm/store-dav
+
+# Installing directly from the OCI registry
+helm install --values values-store-dav.yaml store-dav oci://gitregistry.knut.univention.de/univention/customers/dataport/upx/container-store-dav/helm/store-dav
+```
 
 ## Uninstalling
 
-TODO: complete once the repos on gitlab.souvap-univention.de are ready!
+Uninstalling should be done via the following Helm command:
+
+```
+helm uninstall store-dav
+```
+
+Be aware that Helm does not delete the volumes, you can inspect the volume
+claims via the following command:
+
+```
+kubectl get pvc
+```
+
+The volume claim of `store-dav` is typically called `data-store-dav-0`.
 
 ## Requirements
 
@@ -104,7 +122,7 @@ false
 			<td>image.registry</td>
 			<td>string</td>
 			<td><pre lang="json">
-"registry.souvap-univention.de"
+"gitregistry.knut.univention.de"
 </pre>
 </td>
 			<td></td>
@@ -113,7 +131,7 @@ false
 			<td>image.repository</td>
 			<td>string</td>
 			<td><pre lang="json">
-"souvap/tooling/images/store-dav/store-dav"
+"univention/customers/dataport/upx/container-store-dav/store-dav"
 </pre>
 </td>
 			<td></td>
