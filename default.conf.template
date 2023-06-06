@@ -8,9 +8,7 @@ server {
     create_full_put_path  on;
     dav_access user:rw group:r all:r;
     min_delete_depth 2;
-
-    # TODO: remove debugging config
-    autoindex on;
+    autoindex off;
 
     auth_basic "Store";
     auth_basic_user_file conf/htpasswd;
