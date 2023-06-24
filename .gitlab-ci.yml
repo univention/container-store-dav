@@ -33,12 +33,6 @@ build-store-dav:
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/store-dav"
 
 
-# TODO: Remove once common-ci does not define this job anymore
-publish-helm-charts:
-  rules:
-    - when: never
-
-
 publish-image-souvap-store-dav:
   needs:
     - job: build-store-dav
