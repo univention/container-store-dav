@@ -4,10 +4,10 @@
 
 replicaCount: 1
 
-store_dav:
+storeDav:
   environment: "staging"
   # -- Set to the base64 encoded htpasswd file
-  auth_htpasswd: ""
+  authHtpasswd: ""
 
 image:
   registry: "gitregistry.knut.univention.de"

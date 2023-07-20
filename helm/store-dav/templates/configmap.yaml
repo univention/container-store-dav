@@ -7,6 +7,6 @@ metadata:
   labels:
     {{- include "common.labels.standard" . | nindent 4 }}
 data:
-  ENVIRONMENT: "{{ .Values.store_dav.environment }}"
+  ENVIRONMENT: "{{ .Values.storeDav.environment }}"
 
 ...

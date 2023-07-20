@@ -1,8 +1,8 @@
 
-store_dav:
+storeDav:
   environment: "staging"
   # Example, password set to "univention"
-  auth_htpasswd: |
+  authHtpasswd: |
     portal-server:$apr1$yruGWANI$75Soiqs3hEmezu.g/r3VW/
     portal-listener:$apr1$6kadQ4Ji$hHriD5fpBJyf00SIy.NG41
 

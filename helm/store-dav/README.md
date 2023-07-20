@@ -508,7 +508,7 @@ true
 			<td></td>
 		</tr>
 		<tr>
-			<td>store_dav.auth_htpasswd</td>
+			<td>storeDav.authHtpasswd</td>
 			<td>string</td>
 			<td><pre lang="json">
 ""
@@ -517,7 +517,7 @@ true
 			<td>Set to the base64 encoded htpasswd file</td>
 		</tr>
 		<tr>
-			<td>store_dav.environment</td>
+			<td>storeDav.environment</td>
 			<td>string</td>
 			<td><pre lang="json">
 "staging"
