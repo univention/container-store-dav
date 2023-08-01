@@ -2,7 +2,7 @@
 
 Proof-of-Concept for a HTTP based asset store
 
-- **Version**: 0.1.0
+- **Version**: 0.2.0
 - **Type**: application
 - **AppVersion**: 0.0.1
 

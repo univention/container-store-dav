@@ -1,24 +1,22 @@
-version: "3.9"
-
-name: "dev-local"
+---
 
 services:
-  store-dav:
-    build:
-      context: .
-    ports:
-      - "8081:80"
+  # Environment of the pre-commit linter.
+  pre-commit:
+    profiles:
+      - test
+    image: gitregistry.knut.univention.de/univention/customers/dataport/upx/container-pre-commit/upx-pre-commit:latest
     volumes:
       - type: bind
-        source: htpasswd
-        target: /etc/nginx/conf/htpasswd
+        source: .
+        target: /code
       - type: volume
-        source: store-dav-data
-        target: /data
-    networks:
-      default:
-        aliases:
-          - store-dav
+        # pre-commit installs dependencies, having them cached speeds things up
+        # a lot.
+        source: pre-commit-cache
+        target: /cache
 
 volumes:
-  store-dav-data:
+  pre-commit-cache:
+
+...
