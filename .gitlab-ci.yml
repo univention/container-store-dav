@@ -29,7 +29,7 @@ build-store-dav:
   extends: .kaniko
   needs: []
   variables:
-    KANIKO_BUILD_CONTEXT: "."
+    KANIKO_BUILD_CONTEXT: "docker/store-dav"
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/store-dav"
 
 
