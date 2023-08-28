@@ -10,7 +10,7 @@ include:
 
 
 variables:
-  SOUVAP_HELM_PROJECT_ID: 121
+  SOUVAP_HELM_PROJECT_ID: 155
   SOUVAP_REGISTRY_PATH: souvap/tooling/images/univention
 
 
