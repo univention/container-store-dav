@@ -45,5 +45,13 @@ publish-image-souvap-store-dav:
     SOUVAP_IMAGE_NAME: "store-dav"
 
 
+publish-image-souvap-config-htpasswd:
+  needs:
+    - job: build-config-htpasswd
+  extends: .push-image-souvap
+  variables:
+    SOUVAP_IMAGE_NAME: "config-htpasswd"
+
+
 publish-helm-charts-souvap:
   extends: .publish-helm-charts-souvap
