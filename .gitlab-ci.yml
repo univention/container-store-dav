@@ -11,7 +11,7 @@ include:
 
 variables:
   SOUVAP_HELM_PROJECT_ID: 121
-  SOUVAP_REGISTRY_PATH: souvap/tooling/images/univention-store-dav
+  SOUVAP_REGISTRY_PATH: souvap/tooling/images/univention
 
 
 lint-pre-commit:
