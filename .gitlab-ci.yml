@@ -33,6 +33,15 @@ build-store-dav:
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/store-dav"
 
 
+build-config-htpasswd:
+  stage: build
+  extends: .kaniko
+  needs: []
+  variables:
+    KANIKO_BUILD_CONTEXT: "docker/config-htpasswd"
+    CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/config-htpasswd"
+
+
 publish-image-souvap-store-dav:
   needs:
     - job: build-store-dav
