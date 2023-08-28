@@ -16,7 +16,21 @@ services:
         source: pre-commit-cache
         target: /cache
 
+  store-dav:
+    build:
+      context: docker/store-dav
+    ports:
+      - "8081:80"
+    volumes:
+      - type: bind
+        source: htpasswd
+        target: /etc/nginx/conf/htpasswd
+      - type: volume
+        source: store-dav-data
+        target: /data
+
 volumes:
   pre-commit-cache:
+  store-dav-data:
 
 ...
