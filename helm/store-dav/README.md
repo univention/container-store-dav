@@ -110,6 +110,42 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>image.configHtpasswd.pullPolicy</td>
+			<td>string</td>
+			<td><pre lang="json">
+"Always"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>image.configHtpasswd.registry</td>
+			<td>string</td>
+			<td><pre lang="json">
+"gitregistry.knut.univention.de"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>image.configHtpasswd.repository</td>
+			<td>string</td>
+			<td><pre lang="json">
+"univention/customers/dataport/upx/container-store-dav/config-htpasswd"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>image.configHtpasswd.tag</td>
+			<td>string</td>
+			<td><pre lang="json">
+"latest"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>image.pullPolicy</td>
 			<td>string</td>
 			<td><pre lang="json">
@@ -508,13 +544,22 @@ true
 			<td></td>
 		</tr>
 		<tr>
+			<td>storeDav.auth.basicAuth</td>
+			<td>string</td>
+			<td><pre lang="json">
+null
+</pre>
+</td>
+			<td>Map from "username" to "password"</td>
+		</tr>
+		<tr>
 			<td>storeDav.authHtpasswd</td>
 			<td>string</td>
 			<td><pre lang="json">
 ""
 </pre>
 </td>
-			<td>Set to the base64 encoded htpasswd file</td>
+			<td>Deprecated 2023-08-28, use "storeDav.auth.basicAuth" instead. Set to the htpasswd file's content.</td>
 		</tr>
 		<tr>
 			<td>storeDav.environment</td>

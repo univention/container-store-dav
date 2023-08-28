@@ -30,6 +30,22 @@ spec:
       serviceAccountName: {{ include "common.names.fullname" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: "config-htpasswd"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{ with .Values.image.configHtpasswd }}
+          image: "{{ if .registry }}{{ .registry }}/{{ end }}{{ .repository }}{{ if .sha256 }}@sha256:{{ .sha256 }}{{ else }}:{{ .tag }}{{ end }}"
+          imagePullPolicy: {{ .pullPolicy }}
+          {{ end }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "common.names.fullname" . }}
+          volumeMounts:
+            - name: users
+              mountPath: /app/users
+            - name: htpasswd
+              mountPath: /app/conf
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -44,8 +60,17 @@ spec:
               containerPort: 80
               protocol: TCP
           volumeMounts:
+            # TODO: Drop support for .Values.storeDav.authHtpasswd
+            {{- if and .Values.storeDav.authHtpasswd .Values.storeDav.auth.basicAuth }}
+            {{ fail "Cannot define '.Values.storeDav.authHtpasswd' and '.Values.storeDav.auth.basicAuth' at the same time." }}
+            {{- end }}
+            {{- if .Values.storeDav.authHtpasswd }}
+            - name: deprecated-htpasswd
+              mountPath: /etc/nginx/conf
+            {{- else }}
             - name: htpasswd
               mountPath: /etc/nginx/conf
+            {{- end }}
             - name: data
               mountPath: /data
           # TODO: enable those again
@@ -60,7 +85,16 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
+      - name: users
+        secret:
+          secretName: {{ include "common.names.fullname" . | quote }}
+          items:
+          - key: users
+            path: users.yaml
       - name: htpasswd
+        emptyDir:
+          sizeLimit: 1Mi
+      - name: deprecated-htpasswd
         secret:
           secretName: {{ include "common.names.fullname" . | quote }}
           items:

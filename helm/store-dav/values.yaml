@@ -6,14 +6,27 @@ replicaCount: 1
 
 storeDav:
   environment: "staging"
-  # -- Set to the base64 encoded htpasswd file
+  # -- Deprecated 2023-08-28, use "storeDav.auth.basicAuth" instead.
+  # Set to the htpasswd file's content.
   authHtpasswd: ""
+
+  auth:
+    # -- Map from "username" to "password"
+    basicAuth:
+      # portal-server: "password"
+      # portal-listener: "password"
 
 image:
   registry: "gitregistry.knut.univention.de"
   repository: "univention/customers/dataport/upx/container-store-dav/store-dav"
   pullPolicy: "Always"
   tag: "latest"
+
+  configHtpasswd:
+    registry: "gitregistry.knut.univention.de"
+    repository: "univention/customers/dataport/upx/container-store-dav/config-htpasswd"
+    pullPolicy: "Always"
+    tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
