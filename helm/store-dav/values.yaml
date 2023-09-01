@@ -38,14 +38,14 @@ ingress:
   enabled: true
   ingressClassName: "nginx"
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: "/portal-assets/$1"
-    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^/univention/portal(/icons/entries/.*)$ /portal-assets$1 break;
   # -- The hostname. This parameter has to be supplied. Example `portal.example`.
   host: null
   # -- The path configuration. The default only grabs what is known to be part of the frontend.
   paths:
     - pathType: Prefix
-      path: /univention/portal/(icons/entries/.*)
+      path: /univention/portal/icons/entries/
   tls:
     enabled: true
     secretName: ""
