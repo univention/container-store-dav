@@ -191,19 +191,28 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target"</td>
+			<td>ingress.annotations."nginx.ingress.kubernetes.io/configuration-snippet"</td>
 			<td>string</td>
 			<td><pre lang="json">
-"/portal-assets/$1"
+"rewrite ^/univention/portal(/icons/entries/.*)$ /portal-assets$1 break;\n"
 </pre>
 </td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>ingress.annotations."nginx.ingress.kubernetes.io/use-regex"</td>
+			<td>ingress.annotations."nginx.org/location-snippets"</td>
 			<td>string</td>
 			<td><pre lang="json">
-"true"
+"rewrite ^/univention/portal(/icons/entries/.*)$ /portal-assets$1 break;\n"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ingress.annotations."nginx.org/mergeable-ingress-type"</td>
+			<td>string</td>
+			<td><pre lang="json">
+"minion"
 </pre>
 </td>
 			<td></td>
@@ -212,7 +221,7 @@ false
 			<td>ingress.enabled</td>
 			<td>bool</td>
 			<td><pre lang="json">
-false
+true
 </pre>
 </td>
 			<td>Set this to `true` in order to enable the installation on Ingress related objects.</td>
@@ -241,7 +250,7 @@ null
 			<td><pre lang="json">
 [
   {
-    "path": "/univention/portal/(icons/entries/.*)",
+    "path": "/univention/portal/icons/entries/",
     "pathType": "Prefix"
   }
 ]
@@ -271,7 +280,7 @@ true
 			<td>istio.enabled</td>
 			<td>bool</td>
 			<td><pre lang="json">
-true
+false
 </pre>
 </td>
 			<td>Set this to `true` in order to enable the installation on Istio related objects.</td>
