@@ -39,9 +39,9 @@ ingress:
   ingressClassName: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      rewrite ^/univention/portal(/icons/entries/.*)$ /portal-assets$1 break;
+      rewrite ^/univention/portal(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
     nginx.org/location-snippets: |
-      rewrite ^/univention/portal(/icons/entries/.*)$ /portal-assets$1 break;
+      rewrite ^/univention/portal(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
     nginx.org/mergeable-ingress-type: "minion"
   # -- The hostname. This parameter has to be supplied. Example `portal.example`.
   host: null
@@ -49,6 +49,8 @@ ingress:
   paths:
     - pathType: Prefix
       path: /univention/portal/icons/entries/
+    - pathType: Prefix
+      path: /univention/portal/icons/logos/
   tls:
     enabled: true
     secretName: ""
@@ -75,6 +77,9 @@ istio:
       - match: "prefix"
         path: "/univention/portal/icons/entries/"
         rewrite: "/portal-assets/icons/entries/"
+      - match: "prefix"
+        path: "/univention/portal/icons/logos/"
+        rewrite: "/portal-assets/icons/logos/"
   gateway:
     enabled: false
     annotations:

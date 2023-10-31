@@ -194,7 +194,7 @@ false
 			<td>ingress.annotations."nginx.ingress.kubernetes.io/configuration-snippet"</td>
 			<td>string</td>
 			<td><pre lang="json">
-"rewrite ^/univention/portal(/icons/entries/.*)$ /portal-assets$1 break;\n"
+"rewrite ^/univention/portal(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;\n"
 </pre>
 </td>
 			<td></td>
@@ -203,7 +203,7 @@ false
 			<td>ingress.annotations."nginx.org/location-snippets"</td>
 			<td>string</td>
 			<td><pre lang="json">
-"rewrite ^/univention/portal(/icons/entries/.*)$ /portal-assets$1 break;\n"
+"rewrite ^/univention/portal(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;\n"
 </pre>
 </td>
 			<td></td>
@@ -251,6 +251,10 @@ null
 [
   {
     "path": "/univention/portal/icons/entries/",
+    "pathType": "Prefix"
+  },
+  {
+    "path": "/univention/portal/icons/logos/",
     "pathType": "Prefix"
   }
 ]
@@ -393,6 +397,11 @@ true
     "match": "prefix",
     "path": "/univention/portal/icons/entries/",
     "rewrite": "/portal-assets/icons/entries/"
+  },
+  {
+    "match": "prefix",
+    "path": "/univention/portal/icons/logos/",
+    "rewrite": "/portal-assets/icons/logos/"
   }
 ]
 </pre>
