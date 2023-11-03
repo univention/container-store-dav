@@ -2,15 +2,16 @@
 
 include:
   - project: "univention/customers/dataport/upx/common-ci"
-    ref: "v0.4.0"
+    ref: "v0.5.0"
     file:
       - "defaults/stages.yaml"
       - "defaults/souvap-workflow.yaml"
-      - "templates/souvap.yaml"
       - "templates/kaniko.yaml"
+      - "templates/semantic-release-env.yaml"
+      - "templates/souvap.yaml"
+      - "jobs/lint-commit-messages.yaml"
       - "jobs/lint-pre-commit.yaml"
       - "jobs/package-and-publish-helm-charts.yaml"
-      - "jobs/semantic-release.yaml"
 
 
 variables:
@@ -23,22 +24,32 @@ lint-pre-commit:
     - helm repo add bitnami https://charts.bitnami.com/bitnami
 
 
+pre-semantic-release:
+  extends: ".pre-semantic-release"
+
+
 build-store-dav:
   stage: build
   extends: .kaniko
-  needs: []
+  needs:
+    - job: "pre-semantic-release"
+      artifacts: true
   variables:
     KANIKO_BUILD_CONTEXT: "docker/store-dav"
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/store-dav"
+    VERSION: "${RELEASE_VERSION}"
 
 
 build-config-htpasswd:
   stage: build
   extends: .kaniko
-  needs: []
+  needs:
+    - job: "pre-semantic-release"
+      artifacts: true
   variables:
     KANIKO_BUILD_CONTEXT: "docker/config-htpasswd"
     CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/config-htpasswd"
+    VERSION: "${RELEASE_VERSION}"
 
 
 publish-image-souvap-store-dav:
@@ -55,6 +66,12 @@ publish-image-souvap-config-htpasswd:
   extends: .push-image-souvap
   variables:
     SOUVAP_IMAGE_NAME: "config-htpasswd"
+
+
+package-helm-charts:
+  needs:
+    - job: "pre-semantic-release"
+      artifacts: true
 
 
 publish-helm-charts-souvap:
