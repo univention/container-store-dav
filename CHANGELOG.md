@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.5.0...v0.5.1) (2023-11-03)
+
+
+### Bug Fixes
+
+* **versions:** produce version-tagged Docker images ([2c55776](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/2c55776a272e7bc02f1e2afcd5e0cc527c39cfbb))
+
 ## [0.5.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.4.0...v0.5.0) (2023-11-02)
 
 
