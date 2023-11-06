@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.5.1...v0.5.2) (2023-11-06)
+
+
+### Bug Fixes
+
+* **docker:** bump common-ci to build latest image ([6bd1de6](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/6bd1de632725d31d1f8df2972ef498db4dd64450))
+
 ## [0.5.1](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.5.0...v0.5.1) (2023-11-03)
 
 
