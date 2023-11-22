@@ -1,80 +1,47 @@
 ---
-
 include:
   - project: "univention/customers/dataport/upx/common-ci"
-    ref: "v0.5.4"
+    ref: "v1.9.4"
     file:
       - "defaults/stages.yaml"
       - "defaults/souvap-workflow.yaml"
-      - "templates/kaniko.yaml"
-      - "templates/semantic-release-env.yaml"
       - "templates/souvap.yaml"
-      - "jobs/lint-commit-messages.yaml"
       - "jobs/lint-pre-commit.yaml"
+      - "jobs/lint-commit-messages.yaml"
+      - "jobs/semantic-release-env.yaml"
+      - "jobs/container-build.yaml"
       - "jobs/package-and-publish-helm-charts.yaml"
-
-
-variables:
-  SOUVAP_HELM_PROJECT_ID: 155
-  SOUVAP_REGISTRY_PATH: souvap/tooling/images/univention
-
 
 lint-pre-commit:
   before_script:
     - helm repo add bitnami https://charts.bitnami.com/bitnami
 
+.build-matrix: &build-matrix
+  - IMAGE_NAME:
+      - "store-dav"
+      - "config-htpasswd"
 
-pre-semantic-release:
-  extends: ".pre-semantic-release"
+container-build:
+  parallel:
+    matrix: *build-matrix
 
+container-generate-sbom:
+  parallel:
+    matrix: *build-matrix
 
-build-store-dav:
-  stage: build
-  extends: .kaniko
-  needs:
-    - job: "pre-semantic-release"
-      artifacts: true
-  variables:
-    KANIKO_BUILD_CONTEXT: "docker/store-dav"
-    CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/store-dav"
-    VERSION: "${RELEASE_VERSION}"
+container-sign:
+  parallel:
+    matrix: *build-matrix
 
+container-security-scan:
+  parallel:
+    matrix: *build-matrix
 
-build-config-htpasswd:
-  stage: build
-  extends: .kaniko
-  needs:
-    - job: "pre-semantic-release"
-      artifacts: true
-  variables:
-    KANIKO_BUILD_CONTEXT: "docker/config-htpasswd"
-    CI_REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/config-htpasswd"
-    VERSION: "${RELEASE_VERSION}"
-
-
-publish-image-souvap-store-dav:
-  needs:
-    - job: build-store-dav
+publish-images:
   extends: .push-image-souvap
-  variables:
-    SOUVAP_IMAGE_NAME: "store-dav"
-
-
-publish-image-souvap-config-htpasswd:
-  needs:
-    - job: build-config-htpasswd
-  extends: .push-image-souvap
-  variables:
-    SOUVAP_IMAGE_NAME: "config-htpasswd"
-
-
-package-helm-charts:
-  needs:
-    - job: "pre-semantic-release"
-      artifacts: true
-
+  parallel:
+    matrix: *build-matrix
 
 publish-helm-charts-souvap:
   extends: .publish-helm-charts-souvap
-
 ...
