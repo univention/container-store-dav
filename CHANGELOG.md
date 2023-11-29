@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.5.2...v0.6.0) (2023-11-29)
+
+
+### Features
+
+* **helm:** selfservice paths ([81998e2](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/81998e26e775d7b92cb43beaa3bab9679c64354f))
+
 ## [0.5.2](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.5.1...v0.5.2) (2023-11-06)
 
 
