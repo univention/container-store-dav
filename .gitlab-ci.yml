@@ -39,6 +39,9 @@ container-security-scan:
 
 publish-images:
   extends: .push-image-souvap
+  needs:
+    - job: container-build
+      artifacts: true
   parallel:
     matrix: *build-matrix
 
