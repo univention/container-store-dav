@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.6.0...v0.7.0) (2023-12-01)
+
+
+### Features
+
+* trigger re-release ([7bc6fec](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/7bc6fecad175afa9423adfc83accf32532de244e))
+
 ## [0.6.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.5.2...v0.6.0) (2023-11-29)
 
 
