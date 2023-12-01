@@ -40,10 +40,10 @@ container-security-scan:
 publish-images:
   extends: .push-image-souvap
   needs:
-    - job: container-build
+    - job: "container-build [${IMAGE_NAME}]"
       artifacts: true
-      parallel:
-        matrix: *build-matrix
+  parallel:
+    matrix: *build-matrix
 
 publish-helm-charts-souvap:
   extends: .publish-helm-charts-souvap
