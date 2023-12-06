@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.7.0...v0.8.0) (2023-12-06)
+
+
+### Features
+
+* **config-htpasswd:** migrate to ucs-base ([140c0a8](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/140c0a8e82ea457853fc72549db557ff43419352))
+
 ## [0.7.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.6.0...v0.7.0) (2023-12-01)
 
 
