@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.8.0...v0.9.0) (2023-12-06)
+
+
+### Features
+
+* **store-dav:** migrate to container-nginx ([7f5527f](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/7f5527f4ce5eaf832d5882fff89145297d753067))
+
 ## [0.8.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.7.0...v0.8.0) (2023-12-06)
 
 
