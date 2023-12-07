@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.0...v0.9.1) (2023-12-07)
+
+
+### Bug Fixes
+
+* Update to nginx base image 0.1.1 ([0a36beb](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/0a36beb1677dafe39d5344c8e5af960ae4690581))
+
 ## [0.9.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.8.0...v0.9.0) (2023-12-06)
 
 
