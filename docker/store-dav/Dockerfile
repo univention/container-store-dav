@@ -1,4 +1,4 @@
-FROM gitregistry.knut.univention.de/univention/customers/dataport/upx/container-nginx/nginx:0.1.0
+FROM gitregistry.knut.univention.de/univention/customers/dataport/upx/container-nginx/nginx:0.1.1
 
 RUN mkdir -p \
       /data/client_temp \
@@ -6,4 +6,4 @@ RUN mkdir -p \
     && chown -R nginx: /data
 
 COPY entrypoint-ensure-volume-permissions.sh /entrypoint.d/entrypoint-ensure-volume-permissions.sh
-COPY default.conf /etc/nginx/conf.d/
+COPY default.conf /etc/nginx/sites-enabled/default
