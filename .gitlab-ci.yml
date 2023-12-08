@@ -1,7 +1,7 @@
 ---
 include:
   - project: "univention/customers/dataport/upx/common-ci"
-    ref: "v1.9.9"
+    ref: "v1.11.1"
     file:
       - "defaults/stages.yaml"
       - "defaults/souvap-workflow.yaml"
@@ -9,7 +9,7 @@ include:
       - "jobs/lint-pre-commit.yaml"
       - "jobs/lint-commit-messages.yaml"
       - "jobs/semantic-release-env.yaml"
-      - "jobs/container-build.yaml"
+      - "jobs/container-build-souvap.yaml"
       - "jobs/package-and-publish-helm-charts.yaml"
 
 lint-pre-commit:
@@ -37,8 +37,11 @@ container-security-scan:
   parallel:
     matrix: *build-matrix
 
-publish-images:
-  extends: .push-image-souvap
+push-image-souvap:
+  parallel:
+    matrix: *build-matrix
+
+container-sign-souvap:
   parallel:
     matrix: *build-matrix
 
