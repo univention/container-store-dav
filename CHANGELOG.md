@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.3](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.2...v0.9.3) (2023-12-18)
+
+
+### Bug Fixes
+
+* **ci:** add Helm chart signing and publishing to souvap via OCI, common-ci 1.12.x ([951d4be](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/951d4be5c47768951571f6636e5c2ce7102896dc))
+
 ## [0.9.2](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.1...v0.9.2) (2023-12-11)
 
 
