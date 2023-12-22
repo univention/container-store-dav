@@ -1,2 +1,3 @@
 /helm/*/charts/*.tgz
 /helm/values-*.yaml
+.ruff_chache/
