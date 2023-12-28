@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.4](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.3...v0.9.4) (2023-12-28)
+
+
+### Bug Fixes
+
+* **licensing/ci:** add spdx license headers, add license header checking pre-commit ([5ecae5d](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/5ecae5d2e0f00663119f65993dd33af14488b944))
+
 ## [0.9.3](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.2...v0.9.3) (2023-12-18)
 
 
