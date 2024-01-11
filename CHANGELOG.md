@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.5](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.4...v0.9.5) (2024-01-11)
+
+
+### Bug Fixes
+
+* **helm:** fix formatting to detect apiVersion ([abbf3d1](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/abbf3d12707f7b309eb32ea566c8b9f9c68242f9))
+* **helm:** fix formatting to detect apiVersion ([3ae79bf](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/3ae79bf5a1cb349bbce8ad05511941e3339908dd))
+
 ## [0.9.4](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.3...v0.9.4) (2023-12-28)
 
 
