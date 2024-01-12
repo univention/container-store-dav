@@ -1,15 +1,23 @@
+# Disclaimer - Work in progress
+
+The repository you are looking into is work in progress.
+
+It contains proof of concept and preview builds in development created in context of the [openDesk](https://gitlab.opencode.de/bmi/souveraener_arbeitsplatz/info) project.
+
+The repository's content provides you with first insights into the containerized cloud IAM from Univention, derived from the UCS appliance.
+
+## Status - EXPERIMENTAL
+
+The container is experimental. It has been created to allow various other
+containers to stay or become stateless.
+
+
 # HTTP (DAV) based store - EXPERIMENTAL
 
 This repository does provide a container which allows to store and retrieve
 assets based on HTTP.
 
 The implementation is based on Nginx.
-
-
-## Status - EXPERIMENTAL
-
-The container is experimental. It has been created to allow various other
-containers to stay or become stateless.
 
 
 ## Usage idea
@@ -125,7 +133,3 @@ commonly be used to hold file like assets.
 ## Contact
 
 Maintained by Team SouvAP Dev.
-
-Contact:
-
-- johannes.bornhold.extern@univention.de
