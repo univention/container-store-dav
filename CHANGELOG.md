@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.6](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.5...v0.9.6) (2024-01-15)
+
+
+### Bug Fixes
+
+* **deps:** add renovate.json ([5dd3cbd](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/5dd3cbd052ac0eb688d2c7da60a1409c24e6ccdd))
+
 ## [0.9.5](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.4...v0.9.5) (2024-01-11)
 
 
