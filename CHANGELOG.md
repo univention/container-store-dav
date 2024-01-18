@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.6...v0.10.0) (2024-01-18)
+
+
+### Features
+
+* **ci:** add debian update check jobs for scheduled pipeline ([c200fc4](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/commit/c200fc441053aa61f06e2d66d8728feed7562946))
+
 ## [0.9.6](https://git.knut.univention.de/univention/customers/dataport/upx/container-store-dav/compare/v0.9.5...v0.9.6) (2024-01-15)
 
 
