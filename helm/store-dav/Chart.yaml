@@ -2,7 +2,6 @@
 # SPDX-FileCopyrightText: 2023 Univention GmbH
 
 ---
-
 apiVersion: v2
 name: store-dav
 description: "Proof-of-Concept for a HTTP based asset store"
@@ -30,5 +29,5 @@ appVersion: "0.0.1"
 
 dependencies:
   - name: "common"
-    repository: "oci://gitregistry.knut.univention.de/univention/customers/dataport/upx/common-helm/helm"
-    version: "^0.1.0"
+    version: "^2.x.x"
+    repository: "oci://registry.souvap-univention.de/souvap/tooling/charts/bitnami-charts"

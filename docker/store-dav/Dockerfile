@@ -8,5 +8,4 @@ RUN mkdir -p \
       /data/www \
     && chown -R nginx: /data
 
-COPY entrypoint-ensure-volume-permissions.sh /entrypoint.d/entrypoint-ensure-volume-permissions.sh
-COPY default.conf /etc/nginx/sites-enabled/default
+COPY nginx.conf /etc/nginx/nginx.conf

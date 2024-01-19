@@ -1,4 +1,4 @@
-
+---
 storeDav:
   environment: "staging"
   # Example, password set to "univention"

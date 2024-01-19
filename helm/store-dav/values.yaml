@@ -1,56 +1,107 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # SPDX-FileCopyrightText: 2023 Univention GmbH
 
-# Default values for self-service-api.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+---
+# The global properties are used to configure multiple charts at once.
+global:
+  # -- Container registry address.
+  imageRegistry: ""
 
-replicaCount: 1
+  # -- Credentials to fetch images from private registry.
+  # Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  #
+  # imagePullSecrets:
+  #   - "docker-registry"
+  imagePullSecrets: []
 
-storeDav:
-  environment: "staging"
-  # -- Deprecated 2023-08-28, use "storeDav.auth.basicAuth" instead.
-  # Set to the htpasswd file's content.
-  authHtpasswd: ""
+  # -- Define an ImagePullPolicy.
+  #
+  # Ref.: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
+  #
+  # "IfNotPresent" => The image is pulled only if it is not already present locally.
+  # "Always" => Every time the kubelet launches a container, the kubelet queries the container image registry to
+  #             resolve the name to an image digest. If the kubelet has a container image with that exact digest cached
+  #             locally, the kubelet uses its cached image; otherwise, the kubelet pulls the image with the resolved
+  #             digest, and uses that image to launch the container.
+  # "Never" => The kubelet does not try fetching the image. If the image is somehow already present locally, the
+  #            kubelet attempts to start the container; otherwise, startup fails.
+  imagePullPolicy: "IfNotPresent"
 
-  auth:
-    # -- Map from "username" to "password"
-    basicAuth:
-      # portal-server: "password"
-      # portal-listener: "password"
 
-image:
-  registry: "gitregistry.knut.univention.de"
-  repository: "univention/customers/dataport/upx/container-store-dav/store-dav"
-  pullPolicy: "Always"
-  tag: "latest"
+# -- Additional custom annotations to add to all deployed objects.
+additionalAnnotations: {}
 
-  configHtpasswd:
-    registry: "gitregistry.knut.univention.de"
-    repository: "univention/customers/dataport/upx/container-store-dav/config-htpasswd"
-    pullPolicy: "Always"
-    tag: "latest"
+# -- Additional custom labels to add to all deployed objects.
+additionalLabels: {}
 
-imagePullSecrets: []
-nameOverride: ""
+# -- Affinity for pod assignment.
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+# Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set.
+affinity: {}
+
+# Security Context.
+# Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+containerSecurityContext:
+  # -- Enable container privileged escalation.
+  allowPrivilegeEscalation: false
+  # -- Security capabilities for container.
+  capabilities:
+    drop:
+      - "ALL"
+  # -- Enable security context.
+  enabled: true
+  # -- Process user id.
+  runAsUser: 1000
+  # -- Process group id.
+  runAsGroup: 1000
+  # -- Filesystem group id.
+  fsGroup: 1000
+  # Set Seccomp profile.
+  seccompProfile:
+    # -- Disallow custom Seccomp profile by setting it to RuntimeDefault.
+    type: "RuntimeDefault"
+  # -- Mounts the container's root filesystem as read-only.
+  readOnlyRootFilesystem: true
+  # -- Run container as a user.
+  runAsNonRoot: true
+
+# -- Array with extra environment variables to add to containers.
+#
+# extraEnvVars:
+#   - name: FOO
+#     value: "bar"
+extraEnvVars: []
+
+# -- Optionally specify a secret to create (primarily intended to be used in development environments to provide custom certificates)
+extraSecrets: []
+
+# -- Optionally specify an extra list of additional volumes.
+extraVolumes: []
+
+# -- Optionally specify an extra list of additional volumeMounts.
+extraVolumeMounts: []
+
+# -- Provide a name to substitute for the full names of resources.
 fullnameOverride: ""
 
-## Kubernetes ingress
+# -- Credentials to fetch images from private registry.
+# Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+#
+# imagePullSecrets:
+#   - "docker-registry"
+imagePullSecrets: []
+
+# Define and create Kubernetes Ingress.
+#
+# Ref.: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
-  # -- Set this to `true` in order to enable the installation on Ingress related objects.
-  enabled: true
-  ingressClassName: "nginx"
-  annotations:
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      rewrite ^/univention/portal(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
-      rewrite ^/univention/selfservice(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
-    nginx.org/location-snippets: |
-      rewrite ^/univention/portal(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
-      rewrite ^/univention/selfservice(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
-    nginx.org/mergeable-ingress-type: "minion"
-  # -- The hostname. This parameter has to be supplied. Example `portal.example`.
-  host: null
-  # -- The path configuration. The default only grabs what is known to be part of the frontend.
+  # -- Enable creation of Ingress.
+  enabled: false
+
+  # -- Define the Fully Qualified Domain Name (FQDN) where application should be reachable.
+  # host: store-dav.local
+
+  # -- Define the Ingress paths.
   paths:
     - pathType: Prefix
       path: /univention/portal/icons/entries/
@@ -60,16 +111,39 @@ ingress:
       path: /univention/selfservice/icons/entries/
     - pathType: Prefix
       path: /univention/selfservice/icons/logos/
+
+  # -- The Ingress controller class name.
+  ingressClassName: "nginx"
+
+  # -- Define custom ingress annotations.
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^/univention/portal(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
+      rewrite ^/univention/selfservice(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
+    nginx.org/location-snippets: |
+      rewrite ^/univention/portal(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
+      rewrite ^/univention/selfservice(/icons/(?:entries|logos)/.*)$ /portal-assets$1 break;
+    nginx.org/mergeable-ingress-type: "minion"
+
+  # -- Secure an Ingress by specifying a Secret that contains a TLS private key and certificate.
+  #
+  # Ref.: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
   tls:
+    # -- Enable TLS/SSL/HTTPS for Ingress.
     enabled: true
-    secretName: ""
+
+    # -- The name of the kubernetes secret which contains a TLS private key and certificate.
+    # Hint: This secret is not created by this chart and must be provided.
+    # secretName: ""
 
 ## Istio support
 istio:
   # -- Set this to `true` in order to enable the installation on Istio related objects.
   enabled: false
   # -- The hostname. This parameter has to be supplied. Example `portal.example`.
-  host: null
+  # host: store-dav.local
   virtualService:
     enabled: true
     annotations: {}
@@ -106,6 +180,150 @@ istio:
       httpsRedirect: true
       secretName: ""
 
+
+# -- Lifecycle to automate configuration before or after startup.
+lifecycleHooks: {}
+
+#  Configure extra options for containers probes.
+livenessProbe:
+  # -- Number of failed executions until container is terminated.
+  failureThreshold: 10
+  # -- Delay after container start until LivenessProbe is executed.
+  initialDelaySeconds: 15
+  # -- Time between probe executions.
+  periodSeconds: 20
+  # -- Number of successful executions after failed ones until container is marked healthy.
+  successThreshold: 1
+  # -- Timeout for command return.
+  timeoutSeconds: 5
+  tcpSocket:
+    port: 8080
+
+# -- String to partially override release name.
+nameOverride: ""
+
+# -- Node labels for pod assignment.
+# Ref: https://kubernetes.io/docs/user-guide/node-selection/
+nodeSelector: {}
+
+# Database persistence settings.
+persistence:
+  # -- The volume access modes, some of "ReadWriteOnce", "ReadOnlyMany", "ReadWriteMany", "ReadWriteOncePod".
+  #
+  # "ReadWriteOnce" => The volume can be mounted as read-write by a single node. ReadWriteOnce access mode still can
+  #                    allow multiple pods to access the volume when the pods are running on the same node.
+  # "ReadOnlyMany" => The volume can be mounted as read-only by many nodes.
+  # "ReadWriteMany" => The volume can be mounted as read-write by many nodes.
+  # "ReadWriteOncePod" => The volume can be mounted as read-write by a single Pod. Use ReadWriteOncePod access mode if
+  #                       you want to ensure that only one pod across whole cluster can read that PVC or write to it.
+  #
+  accessModes:
+    - "ReadWriteOnce"
+
+  # -- Annotations for the PVC.
+  annotations: {}
+
+  # -- Custom PVC data source.
+  dataSource: {}
+
+  # -- Enable data persistence (true) or use temporary storage (false).
+  enabled: true
+
+  # -- Use an already existing claim.
+  existingClaim: ""
+
+  # -- Labels for the PVC.
+  labels: {}
+
+  # -- The volume size with unit.
+  size: "1Gi"
+
+  # -- The (storage) class of PV.
+  storageClass: ""
+
+  # -- Selector to match an existing Persistent Volume (this value is evaluated as a template).
+  #
+  # selector:
+  #   matchLabels:
+  #     app: my-app
+  #
+  selector: {}
+
+# -- Pod Annotations.
+# Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+
+# -- Pod Labels.
+# Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+# Pod Security Context.
+# Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+podSecurityContext:
+  # -- Enable security context.
+  enabled: true
+
+  # -- If specified, all processes of the container are also part of the supplementary group.
+  fsGroup: 1000
+
+  # -- Change ownership and permission of the volume before being exposed inside a Pod.
+  fsGroupChangePolicy: "Always"
+
+#  Configure extra options for containers probes.
+readinessProbe:
+  # -- Delay after container start until ReadinessProbe is executed.
+  initialDelaySeconds: 15
+  # -- Number of failed executions until container is terminated.
+  failureThreshold: 10
+  # -- Time between probe executions.
+  periodSeconds: 20
+  # -- Number of successful executions after failed ones until container is marked healthy.
+  successThreshold: 1
+  # -- Timeout for command return.
+  timeoutSeconds: 5
+  tcpSocket:
+    port: 8080
+
+# -- Set the amount of replicas of deployment.
+replicaCount: 1
+
+# Configure resource requests and limits.
+#
+# Ref: https://kubernetes.io/docs/user-guide/compute-resources/
+resources: {}
+
+# Define and create Kubernetes Service.
+#
+# Ref.: https://kubernetes.io/docs/concepts/services-networking/service
+service:
+  # -- Additional custom annotations.
+  annotations: {}
+  # -- Enable kubernetes service creation.
+  enabled: true
+  # "ClusterIP" => Exposes the Service on a cluster-internal IP. Choosing this value makes the Service only reachable
+  #                from within the cluster. This is the default that is used if you don't explicitly specify a type for
+  #                a Service.
+  # "NodePort" => Exposes the Service on each Node's IP at a static port (the NodePort). To make the node port
+  #               available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of
+  #               type: ClusterIP.
+  # "LoadBalancer" => Exposes the Service externally using a cloud provider's load balancer.
+  #
+  # Ref.: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  # -- Choose the kind of Service, one of "ClusterIP", "NodePort" or "LoadBalancer".
+  type: "ClusterIP"
+
+  # Define the ports of Service.
+  # You can set the port value to an arbitrary value, it will map the container port by name.
+  #
+  ports:
+    http:
+      # -- Accessible port.
+      port: 80
+      # -- Internal port.
+      containerPort: 8080
+      # -- service protocol.
+      protocol: "TCP"
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -114,61 +332,81 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+  ## @param serviceAccount.automountServiceAccountToken Allows auto mount of ServiceAccountToken on the serviceAccount created
+  ## Can be set to false if pods using this serviceAccount do not need to use K8s API
+  ##
+  automountServiceAccountToken: false
+  # -- Additional custom labels for the ServiceAccount.
+  labels: {}
 
-podAnnotations: {}
+#  Configure extra options for containers probes.
+startupProbe:
+  # -- Delay after container start until StartupProbe is executed.
+  initialDelaySeconds: 15
+  # -- Number of failed executions until container is terminated.
+  failureThreshold: 10
+  # -- Time between probe executions.
+  periodSeconds: 20
+  # -- Number of successful executions after failed ones until container is marked healthy.
+  successThreshold: 1
+  # -- Timeout for command return.
+  timeoutSeconds: 5
+  tcpSocket:
+    port: 8080
 
-podSecurityContext: {}
-  # fsGroup: 2000
+# -- In seconds, time the given to the pod needs to terminate gracefully.
+# Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+terminationGracePeriodSeconds: ""
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-service:
-  enabled: true
-  type: ClusterIP
-  ports:
-    http:
-      containerPort: 80
-      port: 80
-      protocol: "TCP"
-  sessionAffinity:
-    enabled: false
-    timeoutSeconds: 10800
-
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
+# -- Tolerations for pod assignment.
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
 
-affinity: {}
+# -- Topology spread constraints rely on node labels to identify the topology domain(s) that each Node is in.
+# Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+#
+# topologySpreadConstraints:
+#   - maxSkew: 1
+#     topologyKey: failure-domain.beta.kubernetes.io/zone
+#     whenUnsatisfiable: DoNotSchedule
+topologySpreadConstraints: []
 
+# Set up update strategy.
+#
+# Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+#
+# Example:
+# updateStrategy:
+#  type: RollingUpdate
+#  rollingUpdate:
+#    maxSurge: 25%
+#    maxUnavailable: 25%
+updateStrategy:
+  # -- Set to Recreate if you use persistent volume that cannot be mounted by more than one pods to make sure the pods
+  # are destroyed first.
+  type: "RollingUpdate"
 
-persistence:
-  data:
-    storageClass: ""
-    size: "1Gi"
-...
+configHtpasswd:
+  image:
+    repository: "univention/customers/dataport/upx/container-store-dav/config-htpasswd"
+    imagePullPolicy: "IfNotPresent"
+    tag: "0.10.0@sha256:7affd399e06ea88dc502eab3dc6a155d19790700c52c0771f936785b780d97ff"
+
+storeDav:
+  image:
+    # -- Container registry address. This setting has higher precedence than global.registry.
+    # registry: ""
+    repository: "univention/customers/dataport/upx/container-store-dav/store-dav"
+    # -- Image pull policy. This setting has higher precedence than global.imagePullPolicy.
+    imagePullPolicy: "IfNotPresent"
+    tag: "0.10.0@sha256:5bff1210b2eb56ab5adfa3adde7cd375cec23d08d99db9b888a31e89e17f5cb9"
+  environment: "staging"
+  # -- Deprecated 2023-08-28, use "storeDav.auth.basicAuth" instead.
+  # Set to the htpasswd file's content.
+  authHtpasswd: ""
+
+  auth:
+    # -- Map from "username" to "password"
+    basicAuth:
+    # portal-server: "password"
+    # portal-listener: "password"

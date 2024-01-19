@@ -1,5 +1,4 @@
 ---
-
 # SPDX-License-Identifier: AGPL-3.0-only
 # SPDX-FileCopyrightText: 2023 Univention GmbH
 
@@ -83,9 +82,17 @@ repos:
         always_run: true
 
   - repo: "https://git.knut.univention.de/univention/dist/pre-commit-hooks/addlicense"
-    rev: "v1.0.0"
+    rev: "v1.0.1"
     hooks:
       - id: "addlicense"
         name: "Check or add license headers to files"
-        args: []
-...
+
+  - repo: https://github.com/stackrox/kube-linter
+    rev: v0.6.4
+    hooks:
+      - id: kube-linter-system
+        name: KubeLinter System
+        description: This hook runs the KubeLinter utility that exists already on the system to lint Helm charts and Kubernetes YAML files.
+        entry: kube-linter lint
+        language: system
+        types: [yaml]

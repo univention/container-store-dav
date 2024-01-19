@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # SPDX-FileCopyrightText: 2023 Univention GmbH
 
+---
 apiVersion: v1
 kind: Pod
 metadata:
@@ -12,7 +13,25 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: busybox
+      image: busybox:1.3.5
       command: ['wget']
       args: ['{{ include "common.names.fullname" . }}:{{ .Values.service.port }}']
+      resources:
+        limits:
+          memory: 32Mi
+          cpu: 10m
+        requests:
+          memory: 16Mi
+          cpu: 5m
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsGroup: 2000
+        runAsNonRoot: true
+        runAsUser: 2000
+        seccompProfile:
+          type: RuntimeDefault
   restartPolicy: Never

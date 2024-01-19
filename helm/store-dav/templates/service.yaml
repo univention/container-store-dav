@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # SPDX-FileCopyrightText: 2023 Univention GmbH
 
-{{- if or .Values.service.enabled .Values.ingress.enabled }}
 ---
-
+{{- if or .Values.service.enabled .Values.ingress.enabled }}
 apiVersion: "v1"
 kind: "Service"
 metadata:
@@ -12,12 +11,6 @@ metadata:
     {{- include "common.labels.standard" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
-  {{- if .Values.service.sessionAffinity.enabled }}
-  sessionAffinity: "ClientIP"
-  sessionAffinityConfig:
-    clientIP:
-      timeoutSeconds: {{ .Values.service.sessionAffinity.timeoutSeconds }}
-  {{- end }}
   ports:
     {{- range $key, $value := .Values.service.ports }}
     - port: {{ $value.port }}
