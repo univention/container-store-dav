@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # SPDX-FileCopyrightText: 2023 Univention GmbH
 
-FROM gitregistry.knut.univention.de/univention/customers/dataport/upx/container-nginx/nginx:0.1.1
+FROM gitregistry.knut.univention.de/univention/customers/dataport/upx/container-nginx/nginx:0.2.1
 
 RUN mkdir -p \
       /data/client_temp \
